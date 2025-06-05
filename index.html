@@ -2,417 +2,449 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>บันทึกลงทะเบียน LINE Bot Thai Best Friend</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+    <title>Data Input Form</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-      /* Reset default margins and padding */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
       body {
-        font-family: "Kanit", sans-serif;
-        background: linear-gradient(135deg, #e3ffe7 0%, #d9e7ff 100%);
-        background-size: cover;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
+        font-family: sans-serif;
       }
 
       .container {
-        max-width: 600px;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f77200aa;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      select {
         width: 100%;
-        margin: 0 auto;
+        padding: 8px;
+        margin: 5px 0 15px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
       }
 
-      .list {
-        background-color: #ffffff;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-      }
-
-      .list:hover {
-        transform: translateY(-5px);
-      }
-
-      h3 {
-        font-size: 1.8rem;
-        color: #2c3e50;
-        margin-bottom: 0.5rem;
-      }
-
-      h5 {
-        font-size: 1.2rem;
-        color: #e74c3c;
-        font-weight: 400;
-      }
-
-      /* Form elements */
-      .form-select,
-      .form-control {
-        border: 2px solid #dfe6e9;
-        border-radius: 8px;
-        padding: 0.75rem;
-        font-size: 1rem;
-        transition: border-color 0.3s ease;
-      }
-
-      .form-select:focus,
-      .form-control:focus {
-        border-color: #6c5ce7;
-        box-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
-        outline: none;
-      }
-
-      label {
-        color: #2d3436;
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-        display: block;
-      }
-
-      .invalid-feedback {
-        font-size: 0.9rem;
-        color: #e74c3c;
-      }
-
-      /* Validation styling */
-      .form-select:invalid,
-      .form-control:invalid {
-        border-color: #e74c3c; /* Red border for invalid */
-      }
-
-      .form-select:valid,
-      .form-control:valid {
-        border-color: #2ecc71; /* Green border for valid */
-      }
-
-      .was-validated .form-select:invalid,
-      .was-validated .form-control:invalid {
-        border-color: #e74c3c;
-      }
-
-      .was-validated .form-select:valid,
-      .was-validated .form-control:valid {
-        border-color: #2ecc71;
-      }
-
-      /* Button styling */
-      button[type="submit"],
-      button[type="button"] {
-        font-family: "Kanit", sans-serif;
-        width: 100%;
-        padding: 0.9rem;
-        background: #6c5ce7;
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
         border: none;
-        border-radius: 10px;
-        font-size: 1.1rem;
-        color: #fff;
+        border-radius: 4px;
         cursor: pointer;
-        transition: background 0.3s ease, transform 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
       }
 
-      button[type="submit"]:hover:not(:disabled),
-      button[type="button"]:hover:not(:disabled) {
-        background: #a29bfe;
-        transform: translateY(-2px);
+      button:hover {
+        background-color: #45a049;
       }
 
-      button:disabled {
-        background: #b2bec3;
-        cursor: not-allowed;
-      }
-
-      img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-      }
-
-      footer {
-        color: #2d3436;
-        font-size: 0.9rem;
-        text-align: center;
-        padding: 1rem 0;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(5px);
-      }
-
-      footer img {
-        vertical-align: middle;
-        margin-right: 0.5rem;
-      }
-
-      @media (max-width: 768px) {
-        .container {
-          padding: 0 15px;
-        }
-
-        .list {
-          padding: 1.5rem;
-        }
-
-        h3 {
-          font-size: 1.5rem;
-        }
-
-        h5 {
-          font-size: 1rem;
-        }
-
-        button[type="submit"],
-        button[type="button"] {
-          font-size: 1rem;
-          padding: 0.75rem;
-        }
+      .profile-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: solid 3px white;
       }
     </style>
   </head>
 
-  <body id="html-checked">
-    <center>
-      <br />
-      <img
-        src="https://lh3.googleusercontent.com/d/1hTcB5YnvnJtMg0l4fIO5Jo20QbKF5_wh"
-        style="width: 150px; height: auto; padding-bottom: 10px"
-      />
-      <div class="form-group mb-2">
-        <label for="searchtext">
-          <h3>ลงทะเบียนรับบริการ LINE Bot Thai Best Friend</h3>
-          <h5 class="text-center text-danger">ครูอั๋น ใจดี</h5>
-        </label>
+  <body class="bg-gray-100">
+    <div class="container bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <!-- User Profile Display -->
+      <div class="mb-6 text-center">
+        <img id="profilePicture" class="profile-img mx-auto" src="" alt="Profile Picture" />
+        <h3 id="profileName" class="text-xl font-bold mt-2">Loading...</h3>
       </div>
-    </center>
 
-    <div class="container list">
-      <form id="myForm" class="needs-validation my-4" novalidate>
-        <div class="row justify-content-start g-3">
-          <div class="col-12">
-            <label for="room">ชั้น</label>
-            <select class="form-select" id="room" name="room" required>
-              <option value="">กรุณาเลือกชั้นเรียน</option>
-              <option value="3/4">3/4</option>
-              <option value="3/7">3/7</option>
-              <option value="3/11">3/11</option>
-              <option value="3/12">3/12</option>
-              <option value="5/3">5/3</option>
-              <option value="5/5">5/5</option>
-              <option value="5/7">5/7</option>
-            </select>
-            <div class="invalid-feedback">กรุณากรอกระดับชั้นด้วยค่ะ</div>
-          </div>
-          <div class="col-12">
-            <label for="gender">เพศ</label>
-            <select class="form-select" id="gender" name="gender" required>
-              <option value="">กรุณาเลือกเพศ</option>
-              <option value="ชาย">ชาย</option>
-              <option value="หญิง">หญิง</option>
-            </select>
-            <div class="invalid-feedback">กรุณากรอกเพศด้วยค่ะ</div>
-          </div>
-          <div class="col-12">
-            <label for="number">เลขที่</label>
-            <input
-              type="number"
-              id="number"
-              name="number"
-              class="form-control"
-              placeholder="กรุณากรอกเลขที่"
-              required
-            />
-            <div class="invalid-feedback">กรุณากรอกเลขที่ด้วยค่ะ</div>
-          </div>
-          <div class="col-12">
-            <label for="username">ชื่อ นามสกุล</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              class="form-control"
-              placeholder="กรุณากรอกชื่อ นามสกุล"
-              required
-            />
-            <div class="invalid-feedback">กรุณากรอกชื่อ นามสกุลด้วยค่ะ</div>
-          </div>
-          <div class="col-12">
-            <label for="phone">โทรศัพท์</label>
-            <input
-              type="text"
-              id="phone"
-              name="phone"
-              class="form-control"
-              placeholder="กรุณากรอกหมายเลขโทรศัพท์"
-              required
-            />
-            <div class="invalid-feedback">กรุณากรอกหมายเลขโทรศัพท์ด้วยค่ะ</div>
-          </div>
-          <div class="col-12 text-center" id="btn1">
-            <button type="submit" class="btn btn-warning w-100">
-              <i class="bi bi-send-fill"></i> ลงทะเบียน
-            </button>
-          </div>
-          <div class="col-12 text-center" id="btn2" style="display: none">
-            <button type="button" class="btn btn-warning w-100" disabled>
-              <i class="bi bi-send-fill"></i> กำลังลงทะเบียน...
-            </button>
-          </div>
+      <h2 class="text-2xl font-bold mb-4 text-blue-500">ลงทะเบียนบอท LINE OA</h2>
+      <form id="myForm">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="uid"
+            >UID:</label
+          >
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="uid"
+            name="uid"
+            readonly
+          />
         </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+            >ชื่อ นามสกุล:</label
+          >
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="username"
+            name="username"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="room"
+            >เลือกห้อง:</label
+          >
+          <select
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="room"
+            name="room"
+            required
+          >
+            <option value="ม.3/2">ม.3/2</option>
+            <option value="ม.3/9">ม.3/9</option>
+            <option value="ม.3/11">ม.3/11</option>
+            <option value="ม.3/14">ม.3/14</option>
+            <option value="ม.5/1">ม.5/1</option>
+            <option value="ม.5/5">ม.5/5</option>
+            <option value="ม.5/10">ม.5/10</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="number"
+            >เลขที่:</label
+          >
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="number"
+            id="number"
+            name="number"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="phone"
+            >หมายเลขโทรศัพท์:</label
+          >
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="phone"
+            name="phone"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="uimg"
+            >Image URL:</label
+          >
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="uimg"
+            name="uimg"
+            readonly
+          />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="gender"
+            >เลือกเพศ:</label
+          >
+          <select
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="gender"
+            name="gender"
+            required
+          >
+            <option value="ชาย">ชาย</option>
+            <option value="หญิง">หญิง</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onclick="submitData()"
+          >
+            ลงทะเบียน
+          </button>
+        </div>
+        <div id="status" class="mt-4 text-green-500"></div>
       </form>
     </div>
-
-    <footer>
-      <img src="https://aliyahaunjo.github.io/image/kruaun.png" width="30px;" />
-      ©️พัฒนาโดย ครูอั๋น ใจดี <span id="year"></span>
-    </footer>
-
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
-      const scriptUrl =
-        "https://script.google.com/macros/s/AKfycbyVRGa8aLtAx9LQpk15XJBRwWkkmc9HI74LihVXHphfG6aCBc8Vok1xgQOCrZ-Hcx3AoQ/exec";
+      // LINE LIFF Template
+      const liffId = "2000563749-p8RJPXGZ"; // Replace with your actual LIFF ID
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbzixiwM9NlAfOwJbQidYHGVwr7n_g1Si83M1sjmtHc1872b1ATuQvxTKHtv--f8E8f4XQ/exec"; // Replace with your scriptURL
 
-      $(document).ready(() => {
-        $("#btn1").show();
-        $("#btn2").hide();
-
-        // Set the current year dynamically
-        $("#year").text(new Date().getFullYear());
-        $("#year2").text(new Date().getFullYear());
-        // Initialize LINE LIFF
-        liff
-          .init({
-            liffId: "2004508413-lKWgOxGE",
-            withLoginOnExternalBrowser: true,
-          })
-          .then(() => {
-            console.log("LIFF Initialized Successfully");
-            if (!liff.isLoggedIn()) {
-              liff.login();
-            }
-          })
-          .catch((err) => {
-            console.error("LIFF Initialization Failed", err);
-            Swal.fire({
-              icon: "error",
-              title: "ไม่สามารถเชื่อมต่อ LINE LIFF ได้",
-              text: "กรุณาตรวจสอบการเชื่อมต่อหรือลองใหม่",
-            });
+      // Initialize LIFF
+      liff
+        .init({
+          liffId,
+        })
+        .then(() => {
+          console.log("LIFF initialized successfully");
+          liff.ready.then(() => {
+            liff
+              .getProfile()
+              .then((profile) => {
+                console.log("User profile:", profile);
+                // Update profile display
+                document.getElementById("profileName").textContent = profile.displayName;
+                document.getElementById("profilePicture").src = profile.pictureUrl || "https://via.placeholder.com/100";
+                // Prefill form fields
+                document.getElementById("uid").value = profile.userId;
+                document.getElementById("uimg").value = profile.pictureUrl || "";
+                // Check if UID already exists
+                checkUidExists(profile.userId);
+              })
+              .catch((err) => {
+                console.error("Error getting profile:", err);
+                Swal.fire({
+                  icon: "error",
+                  title: "เกิดข้อผิดพลาด!",
+                  text: "ไม่สามารถดึงข้อมูลโปรไฟล์ได้: " + err.message,
+                  confirmButtonColor: "#9CB4CC",
+                });
+              });
           });
-
-        // Real-time validation for visual feedback
-        $("#myForm input, #myForm select").on("input change", function () {
-          if ($(this).is(":valid")) {
-            $(this).css("border-color", "#2ecc71");
-          } else {
-            $(this).css("border-color", "#e74c3c");
+          // Check login status
+          if (!liff.isLoggedIn()) {
+            liff.login();
           }
+          if (liff.isInClient()) {
+            console.log("Running in LINE client");
+          } else {
+            console.log("Running in external browser");
+          }
+        })
+        .catch((err) => {
+          console.error("LIFF initialization failed:", err);
+          Swal.fire({
+            icon: "error",
+            title: "เกิดข้อผิดพลาด!",
+            text: "ไม่สามารถเริ่มต้น LIFF ได้: " + err.message,
+            confirmButtonColor: "#9CB4CC",
+          });
         });
-      });
 
-      function submitForm() {
-        $("#btn1").hide();
-        $("#btn2").show();
-        $.LoadingOverlay("show");
-
-        const data = {
-          opt: "savedata",
-          uid: liff.getDecodedIDToken()?.sub || "",
-          uimg: liff.getDecodedIDToken()?.picture || "",
-          room: $("#room").val(),
-          gender: $("#gender").val(),
-          number: $("#number").val(),
-          username: $("#username").val(),
-          phone: $("#phone").val(),
-        };
-
-        console.log("Submitting Data:", data);
-
-        $.ajax({
-          method: "POST",
-          url: scriptUrl,
-          data: data,
-          dataType: "json",
-          success: (res) => {
-            $.LoadingOverlay("hide");
-            $("#btn2").hide();
-            $("#btn1").show();
-
-            if (res.status === "success") {
-              $("#myForm")[0].reset();
-              Swal.fire({
-                icon: "success",
-                title: "บันทึกข้อมูลเรียบร้อย",
-                confirmButtonText: "ตกลง",
-              });
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "เกิดข้อผิดพลาด",
-                text: res.message || "ไม่สามารถบันทึกข้อมูลได้",
-                confirmButtonText: "ตกลง",
-              });
-            }
-          },
-          error: (err) => {
-            console.error("Submission Error:", err);
-            $.LoadingOverlay("hide");
-            $("#btn2").hide();
-            $("#btn1").show();
+      // Function to check if UID already exists
+      async function checkUidExists(uid) {
+        try {
+          const response = await fetch(scriptURL + "?opt=checkuid&uid=" + encodeURIComponent(uid));
+          const result = await response.json();
+          if (result.status === "exists") {
             Swal.fire({
               icon: "error",
-              title: "บันทึกข้อมูลไม่สำเร็จ",
-              text: "กรุณาลองใหม่อีกครั้ง",
-              confirmButtonText: "ตกลง",
+              title: "ลงทะเบียนซ้ำ!",
+              text: "UID นี้ลงทะเบียนแล้ว กรุณาตรวจสอบ",
+              confirmButtonColor: "#9CB4CC",
+            }).then(() => {
+              closeLiffWindow();
             });
-          },
-        });
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.error("Error checking UID:", error);
+          Swal.fire({
+            icon: "error",
+            title: "เกิดข้อผิดพลาด!",
+            text: "ไม่สามารถตรวจสอบ UID ได้: " + error.message,
+            confirmButtonColor: "#9CB4CC",
+          });
+          return false;
+        }
       }
 
-      // Bootstrap Form Validation
-      (() => {
-        "use strict";
-        const forms = document.querySelectorAll(".needs-validation");
-        Array.from(forms).forEach((form) => {
-          form.addEventListener(
-            "submit",
-            (event) => {
-              event.preventDefault();
-              if (!form.checkValidity()) {
-                event.stopPropagation();
-                form.classList.add("was-validated");
-                $("#myForm").find(":invalid").first().focus();
-              } else {
-                submitForm();
-              }
-            },
-            false
-          );
+      async function submitData() {
+        const form = document.getElementById("myForm");
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
         });
-      })();
+
+        // Client-side validation for required fields
+        const requiredFields = {
+          uid: "UID",
+          username: "ชื่อ นามสกุล",
+          room: "ห้อง",
+          number: "เลขที่",
+          phone: "หมายเลขโทรศัพท์",
+          gender: "เพศ"
+        };
+        let missingFields = [];
+        for (const [key, label] of Object.entries(requiredFields)) {
+          if (!data[key] || data[key].trim() === "") {
+            missingFields.push(label);
+          }
+        }
+
+        if (missingFields.length > 0) {
+          Swal.fire({
+            icon: "error",
+            title: "ข้อมูลไม่ครบถ้วน!",
+            text: `กรุณากรอกข้อมูลต่อไปนี้: ${missingFields.join(", ")}`,
+            confirmButtonColor: "#9CB4CC",
+          });
+          return;
+        }
+
+        // Check UID before proceeding
+        Swal.fire({
+          title: "กำลังตรวจสอบ...",
+          text: "กรุณารอสักครู่",
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+
+        const uidExists = await checkUidExists(data.uid);
+        if (uidExists) {
+          return;
+        }
+
+        // Proceed to save data
+        data["opt"] = "savedata";
+        Swal.fire({
+          title: "กำลังบันทึก...",
+          text: "กรุณารอสักครู่",
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+
+        try {
+          const response = await fetch(scriptURL, {
+            method: "POST",
+            body: new URLSearchParams(data),
+          });
+          const result = await response.json();
+
+          if (result.status === "success") {
+            Swal.fire({
+              icon: "success",
+              title: "บันทึกเรียบร้อย!",
+              text: "ข้อมูลถูกบันทึกสำเร็จ!",
+              confirmButtonColor: "#9CB4CC",
+            }).then(() => {
+              sendFlexMessage(data);
+              form.reset();
+              closeLiffWindow();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "เกิดข้อผิดพลาด!",
+              text: result.message || "ไม่สามารถบันทึกข้อมูลได้",
+              confirmButtonColor: "#9CB4CC",
+            });
+          }
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "เกิดข้อผิดพลาด!",
+            text: "เกิดข้อผิดพลาดในการบันทึก: " + error.message,
+            confirmButtonColor: "#9CB4CC",
+          });
+          console.error("Error:", error);
+        }
+      }
+
+      // Function to send a Flex Message
+      function sendFlexMessage(data) {
+        const flexMessage = {
+          type: "flex",
+          altText: "Data Submission Confirmation",
+          contents: {
+            type: "bubble",
+            styles: {
+              header: {
+                backgroundColor: "#E0BBE4",
+              },
+              body: {
+                backgroundColor: "#9CB4CC",
+              },
+              footer: {
+                backgroundColor: "#E0BBE4",
+              },
+            },
+            header: {
+              type: "box",
+              layout: "vertical",
+              contents: [
+                {
+                  type: "text",
+                  text: "คุณลงทะเบียนเรียบร้อย",
+                  weight: "bold",
+                  color: "#FFFFFF",
+                  size: "lg",
+                  align: "center",
+                },
+              ],
+            },
+            body: {
+              type: "box",
+              layout: "vertical",
+              contents: [
+                {
+                  type: "text",
+                  text: `ชื่อ : ${data.username}`,
+                  color: "#FFFFFF",
+                  size: "md",
+                },
+                {
+                  type: "text",
+                  text: `ห้อง : ${data.room}`,
+                  color: "#FFFFFF",
+                  size: "md",
+                },
+                {
+                  type: "text",
+                  text: `เลขที่ : ${data.number}`,
+                  color: "#FFFFFF",
+                  size: "md",
+                },
+              ],
+            },
+            footer: {
+              type: "box",
+              layout: "vertical",
+              contents: [
+                {
+                  type: "text",
+                  text: "Thank you!",
+                  color: "#FFFFFF",
+                  align: "center",
+                },
+              ],
+            },
+          },
+        };
+        liff
+          .sendMessages([flexMessage])
+          .then(() => {
+            console.log("Flex Message sent successfully");
+          })
+          .catch((err) => {
+            console.error("Error sending flex message:", err);
+          });
+      }
+
+      // Function to close LIFF window
+      function closeLiffWindow() {
+        liff.closeWindow();
+      }
     </script>
-
-    <!-- External Libraries -->
-    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-
-    <div class="text-center p-4 col-12 mt-4">© <span id="year2"></span> Dev By | ครูอั๋น ใจดี</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   </body>
 </html>
